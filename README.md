@@ -1,6 +1,6 @@
 # searchy
 
-No frills, zero-deps, multi-threaded, vector search in Java. Inspired by [annoy](https://github.com/spotify/annoy) and [fann](https://github.com/fennel-ai/fann/?ref=fennel.ai).
+No frills, zero-deps, multi-threaded, vector search in Java. Inspired by [annoy](https://github.com/spotify/annoy) and [fann](https://github.com/fennel-ai/fann/).
 
 ## Description
 

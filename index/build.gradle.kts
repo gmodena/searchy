@@ -1,0 +1,59 @@
+plugins {
+    id("java")
+    id("com.github.spotbugs") version "6.0.19"
+    checkstyle
+    pmd
+}
+
+group = "io.github.gmodena"
+version = "1.0-SNAPSHOT"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_22
+    targetCompatibility = JavaVersion.VERSION_22
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation(platform("org.junit:junit-bom:5.9.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+tasks.spotbugsMain {
+    reports.create("html") {
+        required = true
+        outputLocation = file("$buildDir/reports/spotbugs.html")
+        setStylesheet("fancy-hist.xsl")
+    }
+}
+
+tasks.javadoc {
+    source = sourceSets["main"].allJava // Specify the source files for which Javadoc will be generated
+
+    // Set additional Javadoc options if needed
+    (options as StandardJavadocDocletOptions).apply {
+        encoding = "UTF-8" // Set character encoding
+        charSet = "UTF-8"  // Set charset
+        isAuthor = true    // Include author information
+        isVersion = true   // Include version information
+        links("https://docs.oracle.com/en/java/javase/21/docs/api/") // Add links to the JDK documentation
+        addStringOption("Xdoclint:none", "-quiet")
+    }
+}
+
+spotbugs {
+    excludeFilter = file("config/spotbugs/spotbugs-exclude.xml")
+}
+
+checkstyle {
+    configFile = file("config/checkstyle/checkstyle.xml")
+    isIgnoreFailures = true
+}
+
