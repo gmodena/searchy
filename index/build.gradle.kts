@@ -1,12 +1,13 @@
 plugins {
     id("java")
     id("com.github.spotbugs") version "6.0.19"
+    id("maven-publish")
     checkstyle
     pmd
 }
 
 group = "io.github.gmodena"
-version = "1.0-SNAPSHOT"
+version = "0.1.0-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_22
@@ -14,7 +15,7 @@ java {
 }
 
 repositories {
-    mavenCentral()
+    mavenCentral()g
 }
 
 dependencies {
@@ -57,3 +58,20 @@ checkstyle {
     isIgnoreFailures = true
 }
 
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/gmodena/searchy")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        create<MavenPublication>("gpr") {
+            from(components["java"])
+        }
+    }
+}
