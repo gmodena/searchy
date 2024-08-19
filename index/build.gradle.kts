@@ -6,7 +6,7 @@ plugins {
     pmd
 }
 
-group = "io.github.gmodena.searchy"
+group = "com.github.gmodena.searchy"
 version = "0.1.0-SNAPSHOT"
 
 java {

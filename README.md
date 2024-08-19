@@ -36,7 +36,7 @@ https://github.com/gmodena/searchy/packages/
 
 ```commandline
 <dependency>
-  <groupId>io.github.gmodena.searchy</groupId>
+  <groupId>com.github.gmodena.searchy</groupId>
   <artifactId>searchy-index</artifactId>
   <version>0.1.0-SNAPSHOT</version>
 </dependency> 
