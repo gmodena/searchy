@@ -17,12 +17,12 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew :index:build
+        run: ./gradlew :searchy-index:build
       - name: Test with Gradle
-        run: ./gradlew :index:test
+        run: ./gradlew :searchy-index:test
       - name: Spotbugs (on index main)
-        run: ./gradlew :index:spotBugsMain
+        run: ./gradlew :searchy-index:spotBugsMain
         continue-on-error: true
       - name: checkstyle (on index main)
-        run: ./gradlew :index:checkstyleMain
+        run: ./gradlew :searchy-index:checkstyleMain
         continue-on-error: true
