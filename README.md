@@ -25,10 +25,35 @@ result.stream().map(c -> Arrays.toString(c.vector().raw() ) + " " + c.id() + " "
         .forEach(System.out::println);
 ```
 
+## Installation
+
+Jars are currently not available on Maven Central, but can be downloaded from
+the Github package registry.
+
+### Maven
+You need authenticate and use the Github package registry to download the jars at
+https://github.com/gmodena/searchy/packages/
+
+```commandline
+<dependency>
+  <groupId>io.github.gmodena.searchy</groupId>
+  <artifactId>searchy-index</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+</dependency> 
+```
+
+### Manually
+You can build a jar locally by cloning this repo and running gradle:
+```
+$ git clone https://github.com/gmodena/searchy.git
+$ ./gradlew :searchy-index:build
+```
+The jar will be available under `./index/build/libs/searchy-index-*.jar`.
+
 ## API
 Build project documentation with:
 ```commandline
-./gradlew :index:javadoc
+./gradlew :searchy-index:javadoc
 ```
 
 HTML output will be available under `./index/build/docs/javadoc/index.html`.
