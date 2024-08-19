@@ -1,2 +1,2 @@
 rootProject.name = "searchy"
-include("index", "app")
+include("index")
