@@ -71,12 +71,11 @@ public class JVector implements IVector<JVector>, Serializable {
      * @return
      */
     public float distance(JVector that) {
-        var sum = 0.0f;
-        for (var i = 0; i < length; i++) {
-            var c = this.points[i] - that.points[i];
-            sum += c * c;
-        }
-        return sum;
+        return (float) Math.sqrt(
+                IntStream.range(0, length)
+                        .mapToDouble(i -> Math.pow(this.points[i] - that.points[i], 2))
+                        .sum()
+        );
     }
 
     /**

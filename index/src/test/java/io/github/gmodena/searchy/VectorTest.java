@@ -61,8 +61,8 @@ class VectorTest {
 
         float result = vector1.distance(vector2);
 
-        float expected = (float) Math.pow(0.5, 2) + (float) Math.pow(1.0, 2) + (float) Math.pow(1.5, 2);
+        float expected = (float) Math.sqrt(Math.pow(0.5f - 1.0f, 2) + Math.pow(1.0f - 2.0f, 2) + Math.pow(1.5f - 3.0f, 2));
 
-        assertEquals(expected, result);
+        assertEquals(expected, result, 1e-6);
     }
 }
