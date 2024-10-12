@@ -14,7 +14,7 @@ import java.util.*;
  */
 public class Index implements Serializable {
     private final Random random;
-    private final Integer maxSize;
+    private final Integer maxNodeSize;
     private final Integer numTrees;
     private final boolean deduplicate;
     private List<JVector> vectors;
@@ -23,7 +23,7 @@ public class Index implements Serializable {
 
     private Index(Builder builder) {
         this.numTrees = builder.numTrees;
-        this.maxSize = builder.maxSize;
+        this.maxNodeSize = builder.maxSize;
         this.random = builder.random;
         this.deduplicate = builder.deduplicate;
         this.vectors = builder.vectors;
@@ -88,7 +88,7 @@ public class Index implements Serializable {
         var space = new Plane(vectors, vectorIds);
         trees = (ArrayList<Node>) java.util.stream.IntStream.range(0, numTrees)
                 .parallel()
-                .mapToObj(i -> space.partition(maxSize))
+                .mapToObj(i -> space.partition(maxNodeSize))
                 .collect(java.util.stream.Collectors.toList());
     }
 
@@ -111,8 +111,8 @@ public class Index implements Serializable {
         return vectorIds;
     }
 
-    protected Integer maxSize() {
-        return maxSize;
+    protected Integer maxNodeSIze() {
+        return maxNodeSize;
     }
 
     protected Integer numTrees() {
@@ -137,7 +137,7 @@ public class Index implements Serializable {
          * @param maxSize
          * @return
          */
-        public Builder setMaxSize(Integer maxSize) {
+        public Builder withMaxNodeSize(Integer maxSize) {
             this.maxSize = maxSize;
             return this;
         }
@@ -146,7 +146,7 @@ public class Index implements Serializable {
          * @param numTrees
          * @return
          */
-        public Builder setNumTrees(Integer numTrees) {
+        public Builder withNumTrees(Integer numTrees) {
             this.numTrees = numTrees;
             return this;
         }
@@ -155,7 +155,7 @@ public class Index implements Serializable {
          * @param seed
          * @return
          */
-        public Builder setRandomSeed(Long seed) {
+        public Builder withRandomSeed(Long seed) {
             this.random = new Random(seed);
             return this;
         }

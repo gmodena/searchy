@@ -47,8 +47,8 @@ class IndexTest {
     @Test
     void buildVectorSpace_shouldPartitionVectorsCorrectly() {
         Index index = new Index.Builder()
-                .setNumTrees(numTrees)
-                .setMaxSize(maxSize)
+                .withNumTrees(numTrees)
+                .withMaxNodeSize(maxSize)
                 .add(vectors, ids)
                 .build();
 
@@ -67,8 +67,8 @@ class IndexTest {
         ids.add(duplicateVectorId);
 
         Index index = new Index.Builder()
-                .setNumTrees(1)
-                .setMaxSize(10)
+                .withNumTrees(1)
+                .withMaxNodeSize(10)
                 .add(vectors, ids)
                 .build();
 

@@ -45,8 +45,8 @@ public class QueryTest {
         assertEquals(vectors.size(), ids.size());
 
         index = new Index.Builder()
-                .setNumTrees(3)
-                .setMaxSize(10)
+                .withNumTrees(3)
+                .withMaxNodeSize(10)
                 .add(vectors, ids)
                 .build();
     }

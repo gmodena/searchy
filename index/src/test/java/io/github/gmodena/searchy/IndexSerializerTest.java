@@ -30,8 +30,8 @@ public class IndexSerializerTest {
         ids.add(3);
 
         index = new Index.Builder()
-                .setNumTrees(numTrees)
-                .setMaxSize(maxSize)
+                .withNumTrees(numTrees)
+                .withMaxNodeSize(maxSize)
                 .add(vectors, ids)
                 .build();
     }
@@ -42,7 +42,7 @@ public class IndexSerializerTest {
         Index deserializedIndex = IndexSerializer.deserialize(serializedIndex);
 
         assertEquals((int) deserializedIndex.numTrees(), numTrees);
-        assertEquals((int) deserializedIndex.maxSize(), maxSize);
+        assertEquals((int) deserializedIndex.maxNodeSIze(), maxSize);
         // assertTrue(deserializedIndex.getVectorIds() == null);
     }
 }
