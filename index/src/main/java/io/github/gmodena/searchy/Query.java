@@ -3,10 +3,7 @@ package io.github.gmodena.searchy;
 import io.github.gmodena.searchy.bsp.JVector;
 import io.github.gmodena.searchy.bsp.Node;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -56,23 +53,28 @@ public class Query {
      */
     public List<Candidate> search() {
         // neighbours will contain at most topk+1 elements before polling.
-        PriorityQueue<Candidate> neighbours = new PriorityQueue<>(topK + 1);
-        Arrays.stream(queries).parallel()
-                .flatMap(query -> index.getTrees().parallelStream().map(tree -> new Object[]{tree, query}))
-                .forEach(pair -> searchTree((Node) pair[0], (JVector) pair[1], topK));
+        PriorityQueue<Candidate> neighbours = new PriorityQueue<>(topK + 1, Comparator.comparingDouble(Candidate::distance).reversed());
 
-        Arrays.stream(queries)
-                .flatMap(query -> candidates.stream()
-                        .map(idx -> new Candidate(
-                                index.getVector((Integer) idx).raw(),
-                                (Integer) idx,
-                                index.getVector((Integer) idx).distance(query))))
-                .forEach(candidate -> {
-                    neighbours.add(candidate);
-                    if (neighbours.size() > topK) {
-                        neighbours.poll();
-                    }
-                });
+        Arrays.stream(queries).parallel().forEach(query -> {
+            index.getTrees().forEach(tree -> searchTree((Node) tree, query, topK));
+
+            candidates.stream()
+                    .map(idx -> {
+                        JVector vector = index.getVector((Integer) idx);
+                        return new Candidate(vector.raw(), (Integer) idx, vector.distance(query));
+                    })
+                    .forEach(candidate -> {
+                        synchronized (neighbours) {
+                            if (neighbours.size() < topK || candidate.distance() < neighbours.peek().distance()) {
+                                neighbours.offer(candidate);
+                                if (neighbours.size() > topK) {
+                                    neighbours.poll();
+                                }
+                            }
+                        }
+                    });
+        });
+
         return new ArrayList<>(neighbours);
     }
 
