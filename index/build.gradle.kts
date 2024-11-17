@@ -6,8 +6,8 @@ plugins {
     pmd
 }
 
-group = "com.github.gmodena.searchy"
-version = "0.2.0-SNAPSHOT"
+group = "io.github.gmodena.searchy"
+version = "0.3.0"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_22

@@ -27,20 +27,28 @@ result.stream().map(c -> Arrays.toString(c.vector().raw() ) + " " + c.id() + " "
 
 ## Installation
 
-Jars are currently not available on Maven Central, but can be downloaded from
-the Github package registry.
+Jars are published to [jitpack.io](https://jitpack.io/#gmodena/searchy/).
 
 ### Maven
-You need authenticate and use the Github package registry to download the jars at
-https://github.com/gmodena/searchy/packages/
-
-```commandline
-<dependency>
-  <groupId>com.github.gmodena.searchy</groupId>
-  <artifactId>searchy-index</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
-</dependency> 
+Add jitpack to your repositories:
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
 ```
+Then add a dependency on `io.github.gmodena:searchy` with:
+```xml
+<dependency>
+    <groupId>io.github.gmodena</groupId>
+    <artifactId>searchy</artifactId>
+    <version>main-SNAPSHOT</version>
+</dependency>
+```
+
+Check https://jitpack.io/#gmodena/searchy/ for the latest version.
 
 ### Manually
 You can build a jar locally by cloning this repo and running gradle:
