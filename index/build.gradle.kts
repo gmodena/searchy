@@ -58,6 +58,12 @@ checkstyle {
     isIgnoreFailures = true
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(22))
+    }
+}
+
 publishing {
     repositories {
         maven {
