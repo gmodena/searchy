@@ -13,10 +13,10 @@ import java.util.*;
  * A id is a collection of trees. Each tree is a binary space partitioning tree.
  */
 public class Index implements Serializable {
-    private final Random random;
     private final Integer maxNodeSize;
     private final Integer numTrees;
     private final boolean deduplicate;
+    private final Random random;
     private List<JVector> vectors;
     private List<Integer> vectorIds;
     private ArrayList<Node> trees;
@@ -24,11 +24,11 @@ public class Index implements Serializable {
     private Index(Builder builder) {
         this.numTrees = builder.numTrees;
         this.maxNodeSize = builder.maxSize;
-        this.random = builder.random;
         this.deduplicate = builder.deduplicate;
         this.vectors = builder.vectors;
         this.vectorIds = builder.vectorIds;
         this.trees = builder.trees;
+        this.random = builder.random;
 
         this.buildIndex();
     }
@@ -85,7 +85,7 @@ public class Index implements Serializable {
      * Iterate from 0..numTrees and build a tree.
      */
     private void buildIndex() {
-        var space = new Plane(vectors, vectorIds);
+        var space = new Plane(vectors, vectorIds, random);
         trees = (ArrayList<Node>) java.util.stream.IntStream.range(0, numTrees)
                 .parallel()
                 .mapToObj(i -> space.partition(maxNodeSize))
@@ -126,12 +126,12 @@ public class Index implements Serializable {
      */
     public static class Builder {
         private final ArrayList<Node> trees = new ArrayList<>();
-        private Random random = new Random();
         private Integer maxSize;
         private Integer numTrees;
         private boolean deduplicate = true;
         private List<JVector> vectors = new ArrayList<>();
         private List<Integer> vectorIds = new ArrayList<>();
+        private Random random = new Random();
 
         /**
          * @param maxSize
