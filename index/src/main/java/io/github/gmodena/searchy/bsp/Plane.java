@@ -8,43 +8,41 @@ import java.util.*;
  * to mutable objects are passed around and stored in the constructors. This is a potential source of bugs, but a tradeoff
  * to avoid unnecessary object creation and copying.
  */
-public class Plane {
+public final class Plane {
     public final static long MAX_SIZE = 15;
     private final List<JVector> vectors;
     private final List<Integer> ids;
     private final Random random;
 
     /**
-     * Create a new plane with the given vectors and vector ids.
+     * Creates a new plane with the given vectors and vector IDs, using a new Random instance.
      *
-     * @param vectors
-     * @param ids
+     * @param vectors The list of vectors to initialize the plane with
+     * @param ids The list of IDs corresponding to each vector
+     * @throws NullPointerException if either vectors or ids is null
+     * @throws IllegalArgumentException if vectors and ids have different sizes
      */
     public Plane(List<JVector> vectors, List<Integer> ids) {
-        long seed = System.currentTimeMillis();
-        Objects.requireNonNull(vectors);
-        Objects.requireNonNull(ids);
-        this.random = new Random(seed);
-        // stores a reference to mutable objects
-        this.vectors = Collections.unmodifiableList(vectors);
-        this.ids = Collections.unmodifiableList(ids);
+        this(vectors, ids, new Random());
     }
 
     /**
-     * Create a new plane with the given seed, vectors, and vector ids.
+     * Creates a new plane with the given vectors, vector IDs, and random number generator.
      *
-     * @param seed
-     * @param vectors
-     * @param ids
+     * @param vectors The list of vectors to initialize the plane with
+     * @param ids The list of IDs corresponding to each vector
+     * @param random The random number generator to use
+     * @throws NullPointerException if any parameter is null
+     * @throws IllegalArgumentException if vectors and ids have different sizes
      */
-    public Plane(long seed, List<JVector> vectors, List<Integer> ids) {
-        Objects.requireNonNull(seed);
-        Objects.requireNonNull(vectors);
-        Objects.requireNonNull(ids);
-        this.random = new Random(seed);
-        // stores a reference to mutable objects
-        this.vectors = Collections.unmodifiableList(vectors);
-        this.ids = Collections.unmodifiableList(ids);
+    public Plane(List<JVector> vectors, List<Integer> ids, Random random) {
+        Objects.requireNonNull(vectors, "vectors must not be null");
+        Objects.requireNonNull(ids, "ids must not be null");
+        Objects.requireNonNull(random, "random must not be null");
+
+        this.random = Random.from(random);
+        this.vectors = List.copyOf(vectors);
+        this.ids = List.copyOf(ids);
     }
 
     /**
