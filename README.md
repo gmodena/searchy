@@ -13,7 +13,7 @@ import io.github.gmodena.searchy.Index;
 
 Index index = new Index.Builder()
         .withNumTrees(1)
-        .withNodeMaxSize(2)
+        .withMaxNodeSize(2)
         .add(new float[]{1f, 2f, 3f})
         .add(new float[]{4f, 5f, 6f})
         .add(new float[]{7f, 8f, 9f})          
